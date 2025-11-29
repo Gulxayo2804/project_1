@@ -10,7 +10,7 @@ exports.getOne = (req, res, next) => {
 
     if (!task) return res.status(404).json({ message: "Task not found" });
 
-    res.json(service.getOneTask(req.params.id));
+    res.json(task);
 }
 
 exports.createOne = (req, res, next) => {
