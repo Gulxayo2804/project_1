@@ -1,0 +1,16 @@
+const mongoose = require('moongose');
+
+const taskModel = new mongoose.Schem({
+    title: {
+        type: String,
+        required: true
+    },
+    completed: {
+        type: Boolean,
+        default: false
+    }
+}, {
+    timestamps: true
+})
+
+module.exports = mongoose.model('Task', taskModel);
