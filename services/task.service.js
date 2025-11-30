@@ -1,38 +1,27 @@
-const tasks = require('../data');
+const Task = require('../models/task.model');
 
-function getAllTasks() {
-    return tasks;
+async function getAllTasks() {
+    return await Task.find();
 }
 
-function getOneTask(id) {
-    return tasks.find(t => t._id === id);
+async function getOneTask(id) {
+    return await Task.findById(id);
 }
 
-function createTask(title) {
-    const newTask = {
-        _id: Date.now(),
-        title,
-        completed: false
-    }
-    tasks.push(newTask);
+async function createTask(title) {
+    const newTask = new Task({ title })
+    await newTask.save();
     return newTask;
 }
 
-function updateTask(id, data) {
-    const task = tasks.find(t => t._id === data.id)
-    if (!task) return null;
-
-    task.title = data.task ?? task.title;
-    task.completed = data.completed ?? task.completed;
+async function updateTask(id, data) {
+    const task = await Task.findByIdAndUpdate(id, data);
     return task;
 }
 
-function deleteTAsk(id) {
-    const index = tasks.findIndex(t => t.id === id)
-    if (index === -1) return false;
-
-    tasks.splice(index, 1);
-    return true;
+async function deleteTAsk(id) {
+    const task = await Task.findByIdAndDelete(id)
+    return task;
 }
 
 module.exports = {
